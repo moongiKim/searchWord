@@ -1,6 +1,32 @@
 #include <stdio.h>
 #include <string.h>
 
+char *mystrstr(char *haystack, const char *needle)
+{
+	int i = 0, j = 0, needleLen = strlen(needle);
+
+	for(; haystack[i] != '\0'; i++)
+	{
+		if(haystack[i] == needle[0])
+		{
+			for(j=0 ; needle[j]; j++)
+			{
+				if(haystack[i+j] != needle[j])
+				{
+					break;
+				}
+			}
+
+			if(j == needleLen)
+			{
+				return haystack+i+j-needleLen;
+			}
+		}
+	}
+
+	return NULL;
+}
+
 int main()
 {
 	char *sentence = "This is target string";
@@ -10,7 +36,7 @@ int main()
 	printf("Input word : ");
 	scanf("%s", word);
 
-	ptr = strstr(sentence, word);
+	ptr = mystrstr(sentence, word);
 	if(ptr != NULL)
 	{
 		printf("[%s] is exist in [%s]\n", word, sentence);
