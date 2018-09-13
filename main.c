@@ -3,7 +3,12 @@
 
 char *mystrstr(char *haystack, const char *needle)
 {
-	int i = 0, j = 0, needleLen = strlen(needle);
+	int i = 0, j = 0, needleLen = 0;
+
+	if(haystack == NULL || needle == NULL)
+		return NULL;
+
+	needleLen = strlen(needle);
 
 	for(; haystack[i] != '\0'; i++)
 	{
