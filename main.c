@@ -54,12 +54,47 @@ char *mystrstr(char *haystack, const char *needle)
 	return NULL;
 }
 
+int searchWordInFile(char *fileName, char *word)
+{
+    int line = 0, count = 0;
+    char buffer[256] = {0, }, *ptr = NULL;
+    FILE *sfp = NULL;
+
+    sfp = fopen(fileName, "r");
+    if (sfp == NULL)
+    {
+        perror("fopen 실패");
+        return -1;
+    }
+
+    while (!feof(sfp)) //원본 파일 스트림이 EOF를 만나지 않았다면 반복
+    {
+		memset(buffer, 0, sizeof(buffer));
+		fgets( buffer, sizeof(buffer), sfp);
+		line++;
+		ptr = mystrstr(buffer, word);
+		if(ptr != NULL)
+		{
+			count++;
+			printf("find line [%d]\n", line);
+		}
+    }
+
+    if(!count)
+    {
+    	printf("Not exist Word\n");
+    }
+
+    //파일 스트림 닫기
+    fclose(sfp);
+
+    return 0;
+}
+
 int main()
 {
 	int status = 0;
-	char *sentence = "This is target string";
 	char word[256] = {0,}, fileName[256] = {0,};
-	char *ptr = NULL;
 
 	printf("Input FileName : ");
 	scanf("%s", fileName);
@@ -69,19 +104,11 @@ int main()
 	{
 		return status;
 	}
-/*
+
 	printf("Input word : ");
 	scanf("%s", word);
 
-	ptr = mystrstr(sentence, word);
-	if(ptr != NULL)
-	{
-		printf("[%s] is exist in [%s]\n", word, sentence);
-	}
-	else
-	{
-		printf("[%s] is not exist in [%s]\n", word, sentence);
-	}
-*/
+	searchWordInFile(fileName, word);
+
 	return 0;
 }
