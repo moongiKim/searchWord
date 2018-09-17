@@ -80,15 +80,10 @@ int searchWordInFile(char *fileName, char *word)
 		}
     }
 
-    if(!count)
-    {
-    	printf("Not exist Word\n");
-    }
-
     //파일 스트림 닫기
     fclose(sfp);
 
-    return 0;
+    return count;
 }
 
 int main()
@@ -108,7 +103,10 @@ int main()
 	printf("Input word : ");
 	scanf("%s", word);
 
-	searchWordInFile(fileName, word);
+	if(!searchWordInFile(fileName, word))
+	{
+		printf("Not exist Word\n");
+	}
 
 	return 0;
 }
