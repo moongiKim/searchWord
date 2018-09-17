@@ -1,5 +1,27 @@
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
+
+int isExistFile(char *fileName)
+{
+	if (0 == access(fileName, F_OK))
+	{
+		printf("exist file [%s]\n", fileName);
+
+		if ( 0 != access(fileName, R_OK) )
+		{
+			printf("Don't read file [%s]\n", fileName);
+			return -1;
+		}
+	}
+	else
+	{
+		printf("Not exist file [%s]\n", fileName);
+		return -2;
+	}
+
+	return 0;
+}
 
 char *mystrstr(char *haystack, const char *needle)
 {
@@ -34,10 +56,20 @@ char *mystrstr(char *haystack, const char *needle)
 
 int main()
 {
+	int status = 0;
 	char *sentence = "This is target string";
-	char word[256] = {0,};
+	char word[256] = {0,}, fileName[256] = {0,};
 	char *ptr = NULL;
 
+	printf("Input FileName : ");
+	scanf("%s", fileName);
+
+	status = isExistFile(fileName);
+	if(status < 0)
+	{
+		return status;
+	}
+/*
 	printf("Input word : ");
 	scanf("%s", word);
 
@@ -50,6 +82,6 @@ int main()
 	{
 		printf("[%s] is not exist in [%s]\n", word, sentence);
 	}
-
+*/
 	return 0;
 }
