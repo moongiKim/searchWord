@@ -76,9 +76,12 @@ int searchWordInFile(char *fileName, char *word)
 		if(ptr != NULL)
 		{
 			count++;
-			printf("find line [%d]\n", line);
+			printf("find [%d]:[%d]\n", line, (int)(ptr-buffer));
 		}
     }
+
+    printf("##################################\n");
+    printf("Total Count [%d]\n", count);
 
     //파일 스트림 닫기
     fclose(sfp);
